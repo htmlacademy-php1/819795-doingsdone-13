@@ -123,7 +123,7 @@ function  countCategory($tasks, $category){
                     <label class="checkbox">
                         <!--добавить сюда атрибут "checked", если переменная $show_complete_tasks равна единице-->
                         <input class="checkbox__input visually-hidden show_completed"
-                               <?php if ($show_complete_tasks==1) echo " checked "   ?>
+                               <?= $show_complete_tasks==1? " checked " : ''  ?>
                                type="checkbox">
                         <span class="checkbox__text">Показывать выполненные</span>
                     </label>
@@ -146,8 +146,8 @@ function  countCategory($tasks, $category){
                     </tr>
                     <!--показывать следующий тег <tr/>, если переменная $show_complete_tasks равна единице-->
                     <?php foreach ($tasks as $key=>$value): ?>
-                      <?php if ($show_complete_tasks==0 && $value['made']==true) {continue;} ?>
-                        <tr class="tasks__item task <?php if ($value['made']) : ?> task--completed<?php endif; ?>">
+                      <?php if ($show_complete_tasks==0 && $value['made']==true) { continue; } ?>
+                        <tr class="tasks__item task <?= $value['made'] ? "task--completed" : '' ?>">
                             <td class="task__select">
                                 <label class="checkbox task__checkbox">
                                     <input class="checkbox__input visually-hidden" type="checkbox"  checked >
@@ -158,7 +158,7 @@ function  countCategory($tasks, $category){
 
                             <td class="task__controls">
                             </td>
-                      </tr>'
+                      </tr>
 
                     <?php endforeach; ?>
 
