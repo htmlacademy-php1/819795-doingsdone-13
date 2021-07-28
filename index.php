@@ -114,12 +114,8 @@ $tasks = [
                     <label class="checkbox">
                         <!--добавить сюда атрибут "checked", если переменная $show_complete_tasks равна единице-->
                         <input class="checkbox__input visually-hidden show_completed"
-<<<<<<< HEAD
-                               <?= $show_complete_tasks==1?  " checked " : ''  ?>
-=======
-                               <?= $show_complete_tasks==1 ? " checked " : '' ?>
->>>>>>> master
-                               type="checkbox">
+
+                               <?= $show_complete_tasks==1 ? " checked " : '' ?> type="checkbox">
                         <span class="checkbox__text">Показывать выполненные</span>
                     </label>
                 </div>
@@ -154,12 +150,8 @@ $tasks = [
                             <td class="task__controls">
                             </td>
                       </tr>
-<<<<<<< HEAD
 
                     <?php endforeach; ?>
-
-=======
->>>>>>> master
                 </table>
             </main>
         </div>
