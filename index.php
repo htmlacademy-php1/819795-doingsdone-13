@@ -40,10 +40,20 @@ $tasks = [
         'made' => false
     ],
 ];
+
+function  countCategory($tasks, $category): int
+{
+    $count = 0;
+    foreach ($tasks as $value) {
+        if ($value['category'] == $category) {
+            $count++;
+        }
+    }
+    return $count;
+}
 ?>
 <!DOCTYPE html>
 <html lang="ru">
-
 <head>
     <meta charset="UTF-8">
     <title>Дела в порядке</title>
@@ -84,7 +94,7 @@ $tasks = [
                         <?php foreach ($categories as $value): ?>
                         <li class="main-navigation__list-item">
                             <a class="main-navigation__list-item-link" href="#"><?= $value ?></a>
-                            <span class="main-navigation__list-item-count">0</span>
+                            <span class="main-navigation__list-item-count"><?= countCategory($tasks, $value)  ?></span>
                         </li>
                         <?php endforeach; ?>
                     </ul>
@@ -114,7 +124,6 @@ $tasks = [
                     <label class="checkbox">
                         <!--добавить сюда атрибут "checked", если переменная $show_complete_tasks равна единице-->
                         <input class="checkbox__input visually-hidden show_completed"
-
                                <?= $show_complete_tasks==1 ? " checked " : '' ?> type="checkbox">
                         <span class="checkbox__text">Показывать выполненные</span>
                     </label>
