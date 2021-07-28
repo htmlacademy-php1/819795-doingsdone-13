@@ -41,10 +41,11 @@ $tasks = [
     ],
 ];
 
-function  countCategory($tasks, $category){
+function  countCategory($tasks, $category): int
+{
     $count = 0;
-    foreach ($tasks as $key=>$value){
-        if ($value['category']==$category) {
+    foreach ($tasks as $value) {
+        if ($value['category'] == $category) {
             $count++;
         }
     }
