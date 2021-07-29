@@ -5,7 +5,7 @@
         <ul class="main-navigation__list">
             <?php foreach ($categories as $value): ?>
                 <li class="main-navigation__list-item">
-                    <a class="main-navigation__list-item-link" href="#"><?= $value ?></a>
+                    <a class="main-navigation__list-item-link" href="#"><?= htmlspecialchars($value); ?></a>
                     <span class="main-navigation__list-item-count"><?= countCategory($tasks, $value)  ?></span>
                 </li>
             <?php endforeach; ?>
