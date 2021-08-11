@@ -1,20 +1,24 @@
 <?php
-function  countCategory($tasks, $category): int
+function  countProjects($tasks, $project): int
 {
     $count = 0;
     foreach ($tasks as $value) {
-        if ($value['category'] == $category) {
+        if ($value['category'] == $project) {
             $count++;
         }
     }
     return $count;
 }
 
-function countHours ( $data)  {
-    $cur_date = strtotime("now");
-    $task_date = strtotime($data);
-    $diff = $cur_date - $task_date;
-    $hours = $diff/(60*60);
 
-  return floor($hours);
+
+function checkTime ($date) {
+    if ($date==null) {
+        return 0;
+    }
+
+    $date1 = new DateTime('now');
+    $date2 = new DateTime($date);
+    $difference = $date2->diff($date1);
+    return $difference->days<=1||$difference->invert==0;
 }
