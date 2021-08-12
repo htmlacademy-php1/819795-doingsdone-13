@@ -7,17 +7,17 @@ CREATE TABLE users (
                      email VARCHAR(128) NOT NULL UNIQUE,
                      dt_add TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                      password CHAR(64) NOT NULL,
-                     name VARCHAR(128) NOT NULL UNIQUE
+                     name VARCHAR(128) NOT NULL
 );
 CREATE TABLE projects (
                      id INT AUTO_INCREMENT PRIMARY KEY,
-                     user_id INT(11) UNSIGNED NOT NULL,
+                     user_id INT UNSIGNED NOT NULL,
                      content TEXT NOT NULL
 );
 CREATE TABLE tasks (
                         id INT AUTO_INCREMENT PRIMARY KEY,
-                        user_id INT(11) UNSIGNED NOT NULL,
-                        project_id INT(11) UNSIGNED NOT NULL,
+                        user_id INT UNSIGNED NOT NULL,
+                        project_id INT UNSIGNED NOT NULL,
                         dt_add TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                         content TEXT NOT NULL,
                         complete INT DEFAULT 0,
