@@ -3,7 +3,7 @@ function  countProjects($tasks, $project): int
 {
     $count = 0;
     foreach ($tasks as $value) {
-        if ($value['category'] == $project) {
+        if ($value['project_id'] == $project['id']) {
             $count++;
         }
     }

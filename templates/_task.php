@@ -14,16 +14,16 @@
 </tr>
 
 <?php foreach ($tasks as $key=>$value): ?>
-<?php if ($show_complete_tasks==0 && $value['made']==true) {continue;} ?>
-<tr class="tasks__item <?= $value['made'] ?  " task--completed " : ''?>
-                       <?= checkTime($value['date']) ? " task--important " : ''  ?> ">
+<?php if ($show_complete_tasks==0 && $value['complete']==true) {continue;} ?>
+<tr class="tasks__item <?= $value['complete'] ?  " task--completed " : ''?>
+                       <?= checkTime($value['dt_end'])&&!$value['complete'] ? " task--important " : ''  ?> ">
     <td class="task__select">
         <label class="checkbox task__checkbox ">
             <input class="checkbox__input visually-hidden" type="checkbox"  checked >
-            <span class="checkbox__text"><?= htmlspecialchars($value['task'])?></span>
+            <span class="checkbox__text"><?= htmlspecialchars($value['content'])?></span>
         </label>
     </td>
-    <td class="task__date"><?= htmlspecialchars($value['date'])?></td>
+    <td class="task__date"><?= htmlspecialchars($value['dt_end'])?></td>
 
     <td class="task__controls">
     </td>
