@@ -7,4 +7,5 @@ mysqli_set_charset($link, "utf8");
 if (!$link) {
     $error = mysqli_connect_error();
     print("Ошибка подключения: " . $error);
+    exit();
 }
