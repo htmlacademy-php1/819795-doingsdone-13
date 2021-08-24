@@ -5,25 +5,22 @@ require_once ('functions.php');
 require_once ('helpers.php');
 require_once ('init.php');
 
-if (isset($_GET['project_id'])) {
-    $project_id = "AND  project_id =" . $_GET['project_id'];
-}else {
-    $project_id = '';
-}
+$project_id = filter_input(INPUT_GET, 'project_id');
 
 
-$projects = getAllByUserId($link,'projects', 1);
+$userId = 1;
 
-$tasksForProjects = getAllByUserId($link, 'tasks', 1);
+$projects = getProjectsByUserId($link, $userId);
 
-$tasks = getTasksByProjectId($link, 1, $project_id);
+$tasksForProjects = getTasksByUserId($link,  $userId);
 
-$projectsId = getPoleFromBase($link, 'id', 'projects');
+$tasks = getTasksByProjectId($link, $userId, $project_id);
+
 
 $pageProject = include_template('project.php', [
                'projects'=> $projects,
                'tasks'=>$tasksForProjects,
-               'projectsId' => $projectsId
+
 ]);
 
 $pageTask = include_template('_task.php', [
