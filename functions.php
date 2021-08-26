@@ -56,3 +56,31 @@ function getTasksByProjectId ($link, int $user_id,  $project ) : array  {
     return $array;
 }
 
+function validateProject ($value, $projectsId) {
+    if (!in_array($value, $projectsId)){
+        return "Указан несуществующий проект!";
+    }
+    return null;
+}
+
+function validateLength($value, $min, $max) {
+    if($value) {
+       $len = strlen($value);
+       if ($len < $min || $len > $max) {
+           return "Значение должно быть от $min  до $max символов";
+       }
+    }
+    return null;
+}
+
+
+function validateProjectName ($projectsContent,  $projectName)
+{
+    $projectName = mb_strtoupper($projectName);
+    $array = $projectsContent;
+        if (in_array($projectName, $array)) {
+            return "Указан cуществующий проект!";
+        }
+
+    return null;
+}
