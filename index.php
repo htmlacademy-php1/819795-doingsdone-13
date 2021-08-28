@@ -20,7 +20,7 @@ $header = include_template('header.php');
 $footer = include_template('footer.php');
 
 
-$tasksForProjects = getTasksByUserId($link, $userId);
+$tasksForProjects = getTasksByUserId($link, 1);
 
 $tasks = getTasksByProjectId($link, $userId, $project_id);
 

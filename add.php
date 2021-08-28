@@ -67,19 +67,13 @@ if ($_SERVER['REQUEST_METHOD']=='POST'&&empty($errors)){
         $taskAdd['path'] = null;
     };
 
-    if (empty($taskAdd['data'])){
+    if (empty($taskAdd['date'])){
+
         $taskAdd['date']=null;
+
     };
 
-    $sql = "INSERT INTO tasks (user_id, content,  project_id, dt_end, url)
-            VALUES (1, ?, ?, ?, ? )";
-
-    $stmt = db_get_prepare_stmt($link, $sql, $taskAdd);
-    $res = mysqli_stmt_execute($stmt);
-
-    if (!$res) {
-        die('Неверный запрос: ' . mysqli_error());
-    }
+    addTask($link, $taskAdd, $userId);
 
     header('Location: /index.php');
     exit;
@@ -102,7 +96,8 @@ $pageProject = include_template('project.php', [
 
 $pageFormTask = include_template('form-task.php', [
     'projects'=> $projects,
-    'errors' => $errors
+    'errors' => $errors,
+    '_POST' => $_POST
 ]);
 
 $pageContent = include_template('main.php', [

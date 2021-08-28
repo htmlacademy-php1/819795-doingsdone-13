@@ -5,7 +5,9 @@
         <div class="form__row">
             <label class="form__label" for="project_name">Название <sup>*</sup></label>
             <?php $classname = isset($errors) ? "form__input--error" : "" ?>
-            <input class="form__input <?= $classname ?>" type="text" name="project_name" id="project_name" value="" placeholder="Введите название проекта">
+            <?php $value = $_POST['project_name'] ?? "" ?>
+            <input class="form__input <?= $classname ?>" type="text" name="project_name" id="project_name"
+                   value="<?= htmlspecialchars($value) ?>" placeholder="Введите название проекта">
             <p class = form__message><?= $errors?? "" ?></p>
         </div>
 
