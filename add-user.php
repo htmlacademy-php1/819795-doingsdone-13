@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
             return validateLength($value, 1, 100);
         },
         'password' => function ($value)  {
-            return password_hash($value, PASSWORD_DEFAULT);
+            return validateLength($value, 6, 50);
         },
         'email' => function ($value) use ($allEmails) {
         return validateEmail($value, $allEmails);
@@ -47,7 +47,9 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
 
 $footer = include_template('footer.php');
 
-$content = include_template('form-user.php');
+$content = include_template('form-user.php', [
+    'errors'=>$errors
+]);
 
 $pageLayout = include_template('layout.php', [
     'pageTitle' => $pageTitle,
@@ -55,5 +57,13 @@ $pageLayout = include_template('layout.php', [
     'footer' => $footer
 ]);
 
-print_r($errors);
+if ($_SERVER['REQUEST_METHOD']=='POST'&&empty($errors)){
+    $userAdd=$_POST;
+
+
+    addUser($link, $userAdd);
+
+    header('Location: /index.php');
+    exit;
+}
 print ($pageLayout);

@@ -96,7 +96,7 @@ function validateProject ($value, $projectsId) {
 function validateLength($value, $min, $max) {
     if($value) {
        $len = strlen($value);
-       if ($len < $min || $len > $max) {
+       if ($len < $min or $len > $max) {
            return "Значение должно быть от $min  до $max символов";
        }
     }
@@ -157,4 +157,17 @@ function validateEmail ($post, array $allEmails)
     }
 
     return null;
+}
+
+function addUser ($link, array $userAdd){
+    $sql = "INSERT INTO users (email, password,  name)
+            VALUES ( ?, ?, ? )";
+    $userAdd['password'] = password_hash($userAdd['password'], PASSWORD_DEFAULT);
+
+    $stmt = db_get_prepare_stmt($link, $sql, $userAdd);
+    $res = mysqli_stmt_execute($stmt);
+
+    if (!$res) {
+        die('Неверный запрос: ' . mysqli_error());
+    }
 }
