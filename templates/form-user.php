@@ -45,7 +45,8 @@
             </div>
 
             <div class="form__row form__row--controls">
-              <p class="error-message">Пожалуйста, исправьте ошибки в форме</p>
+                <?php $warning = $classname != ""  ? "Пожалуйста, исправьте ошибки в форме" : "" ?>
+                <p class="error-message"><?= $warning ?></p>
 
               <input class="button" type="submit" name="" value="Зарегистрироваться">
             </div>
