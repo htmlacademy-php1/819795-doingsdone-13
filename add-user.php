@@ -45,7 +45,9 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
 
 
 
-$footer = include_template('footer.php');
+$footer = include_template('footer.php', [
+    'button'=>''
+]);
 
 $content = include_template('form-user.php', [
     'errors'=>$errors

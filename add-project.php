@@ -43,10 +43,13 @@ if ($_SERVER['REQUEST_METHOD']=='POST'&&empty($errors)){
 
 $tasksForProjects = getTasksByUserId($link,  $userId);
 
+$button = include_template('button-footer.php');
 
 $header = include_template('header.php');
 
-$footer = include_template('footer.php');
+$footer = include_template('footer.php', [
+    'button'=>$button
+]);
 
 $pageProject = include_template('project.php', [
     'projects'=> $projects,

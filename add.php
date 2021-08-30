@@ -79,14 +79,16 @@ if ($_SERVER['REQUEST_METHOD']=='POST'&&empty($errors)){
     exit;
 }
 
-
+$button = include_template('button-footer.php');
 
 $tasksForProjects = getTasksByUserId($link,  $userId);
 
 
 $header = include_template('header.php');
 
-$footer = include_template('footer.php');
+$footer = include_template('footer.php', [
+    'button'=>$button
+]);
 
 $pageProject = include_template('project.php', [
     'projects'=> $projects,

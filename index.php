@@ -14,10 +14,13 @@ $projects = getProjectsByUserId($link, $userId);
 
 $projectsId = array_column($projects, 'id');
 
+$button = include_template('button-footer.php');
 
 $header = include_template('header.php');
 
-$footer = include_template('footer.php');
+$footer = include_template('footer.php', [
+    'button'=>$button
+]);
 
 
 $tasksForProjects = getTasksByUserId($link, 1);
