@@ -1,45 +1,57 @@
 <?php
 // показывать или нет выполненные задачи
-require_once ('data.php');
-require_once ('functions.php');
-require_once ('helpers.php');
-require_once ('init.php');
-
-$project_id = filter_input(INPUT_GET, 'project_id');
+require('data.php');
+require('functions.php');
+require('helpers.php');
+require('init.php');
 
 
 $userId = 1;
 
+$project_id = filter_input(INPUT_GET, 'project_id');
+
 $projects = getProjectsByUserId($link, $userId);
 
-$tasksForProjects = getTasksByUserId($link,  $userId);
+$projectsId = array_column($projects, 'id');
+
+$button = include_template('button-footer.php');
+
+$header = include_template('header.php');
+
+$footer = include_template('footer.php', [
+    'button'=>$button
+]);
+
+
+$tasksForProjects = getTasksByUserId($link, 1);
 
 $tasks = getTasksByProjectId($link, $userId, $project_id);
 
 
 $pageProject = include_template('project.php', [
-               'projects'=> $projects,
-               'tasks'=>$tasksForProjects,
+    'projects' => $projects,
+    'tasks' => $tasksForProjects,
 
 ]);
+
 
 $pageTask = include_template('_task.php', [
-                'tasks'=>$tasks,
-                'show_complete_tasks'=>$show_complete_tasks,
-
-
+    'tasks' => $tasks,
+    'show_complete_tasks' => $show_complete_tasks,
 ]);
 
-$pageContent = include_template('main.php',[
-               'project'=>  $pageProject,
-               'tasks'=>$pageTask,
-               'show_complete_tasks'=>$show_complete_tasks
-           ]);
+$pageContent = include_template('main.php', [
+    'project' => $pageProject,
+    'content' => $pageTask,
+    'header' => $header,
+]);
 
 $pageLayout = include_template('layout.php', [
     'pageTitle' => $pageTitle,
     'content' => $pageContent,
+    'footer' => $footer
 ]);
+
 
 
 print ($pageLayout);

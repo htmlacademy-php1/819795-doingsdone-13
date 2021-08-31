@@ -21,7 +21,7 @@ CREATE TABLE tasks (
                         dt_add TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                         content TEXT NOT NULL,
                         complete INT DEFAULT 0,
-                        dt_end TIMESTAMP,
-                        url TEXT
+                        dt_end TIMESTAMP DEFAULT NULL,
+                        url TEXT DEFAULT NULL
 
 )
