@@ -4,8 +4,9 @@ require ('functions.php');
 require('helpers.php');
 require('init.php');
 
+session_start();
 
-$userId = 1;
+$userId = $_SESSION['username'];
 
 $projects = getProjectsByUserId($link, $userId);
 
@@ -73,6 +74,7 @@ $pageContent = include_template('main.php', [
 
 
 $pageLayout = include_template('layout.php', [
+    'guest'=>'',
     'pageTitle' => $pageTitle,
     'content' => $pageContent,
     'footer' => $footer

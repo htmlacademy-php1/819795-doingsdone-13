@@ -1,6 +1,7 @@
 <?php
-require ('data.php');
-require ('functions.php');
+
+require('data.php');
+require('functions.php');
 require('helpers.php');
 require('init.php');
 
@@ -8,24 +9,24 @@ $errors = [];
 
 $allEmails = getAllEmails($link);
 
+
+
 if ($_SERVER['REQUEST_METHOD']=='POST'){
-    $required = ['name', 'password', 'email'];
+
+
+    $required = ['email'];
 
     $rules = [
-        'name' => function ($value) {
-            return validateLength($value, 1, 100);
-        },
-        'password' => function ($value)  {
-            return validateLength($value, 6, 50);
-        },
         'email' => function ($value) use ($allEmails) {
-        return validateEmail($value, $allEmails);
-    }
+            return checkEmail($value, $allEmails);
+        }
     ];
 
     $user = filter_input_array(INPUT_POST,
-        ['name'=> FILTER_DEFAULT, 'password'=>FILTER_DEFAULT, 'email'=>FILTER_VALIDATE_EMAIL],
+        [ 'email'=>FILTER_DEFAULT, 'password'=>FILTER_DEFAULT],
         true);
+
+
 
     foreach ($user as $key=>$value) {
         if (isset($rules[$key])) {
@@ -36,21 +37,20 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
             $errors[$key] = "Поле надо заполнить";
         }
     }
-
+    if (in_array(strtolower($user['email']), $allEmails)){
+        $password = getPasswordByEmail($user['email'], $link);
+        password_verify($user['password'],$password)? $errors['password'] = null : $errors['password'] =  "Указан неверный пароль" ;
+    }
     $errors = array_filter($errors);
 
 }
 
-
-
-
-
 $footer = include_template('footer.php', [
-    'button'=>''
+    'button' => ''
 ]);
 
-$content = include_template('form-user.php', [
-    'errors'=>$errors
+$content = include_template('form-auth.php',[
+    'errors' => $errors
 ]);
 
 $pageLayout = include_template('layout.php', [
@@ -60,13 +60,12 @@ $pageLayout = include_template('layout.php', [
     'footer' => $footer
 ]);
 
-if ($_SERVER['REQUEST_METHOD']=='POST'&&empty($errors)){
-    $userAdd=$_POST;
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && empty($errors)) {
 
-
-    addUser($link, $userAdd);
+    session_start();
+    $_SESSION['username'] = getUserIdByEmail($link, $user['email']);
 
     header('Location: /index.php');
-    exit;
+
 }
 print ($pageLayout);

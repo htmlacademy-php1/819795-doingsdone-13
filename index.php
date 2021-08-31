@@ -6,7 +6,17 @@ require('helpers.php');
 require('init.php');
 
 
-$userId = 1;
+session_start();
+
+if (empty($_SESSION['username']))
+{
+    header('Location: /logout.php');
+    exit;
+}
+
+$userId = $_SESSION['username'];
+
+
 
 $project_id = filter_input(INPUT_GET, 'project_id');
 
@@ -47,6 +57,7 @@ $pageContent = include_template('main.php', [
 ]);
 
 $pageLayout = include_template('layout.php', [
+    'guest'=>'',
     'pageTitle' => $pageTitle,
     'content' => $pageContent,
     'footer' => $footer
