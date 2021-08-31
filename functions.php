@@ -149,6 +149,17 @@ function getAllEmails ($link):array{
 
 }
 
+function TakePasswordByEmail ($link, $email) {
+    $sql = "SELECT * FROM users WHERE  email='". $email ."'" ;
+    $result = mysqli_query($link, $sql);
+    $array = mysqli_fetch_array($result, MYSQLI_ASSOC);
+    if (empty($array)){
+        return null;
+    }
+    return $array['password'];
+
+}
+
 function validateEmail ($post, array $allEmails)
 {
     $email = $post;
@@ -163,7 +174,7 @@ function addUser ($link, array $userAdd){
     $sql = "INSERT INTO users (email, password,  name)
             VALUES ( ?, ?, ? )";
     $userAdd['password'] = password_hash($userAdd['password'], PASSWORD_DEFAULT);
-
+    $userAdd['email'] = mb_strtolower($userAdd['email']);
     $stmt = db_get_prepare_stmt($link, $sql, $userAdd);
     $res = mysqli_stmt_execute($stmt);
 
