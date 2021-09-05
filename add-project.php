@@ -4,9 +4,11 @@ require ('functions.php');
 require('helpers.php');
 require('init.php');
 
-session_start();
 
-$userId = $_SESSION['username'];
+checkSession();
+
+$userId = $_SESSION['userId'];
+$userName = $_SESSION['name'];
 
 $projects = getProjectsByUserId($link, $userId);
 
@@ -46,7 +48,9 @@ $tasksForProjects = getTasksByUserId($link,  $userId);
 
 $button = include_template('button-footer.php');
 
-$header = include_template('header.php');
+$header = include_template('header.php', [
+    'userName'=>$userName
+] );
 
 $footer = include_template('footer.php', [
     'button'=>$button

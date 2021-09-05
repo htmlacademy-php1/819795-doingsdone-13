@@ -14,6 +14,7 @@ $allEmails = getAllEmails($link);
 if ($_SERVER['REQUEST_METHOD']=='POST'){
 
 
+
     $required = ['email'];
 
     $rules = [
@@ -26,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
         [ 'email'=>FILTER_DEFAULT, 'password'=>FILTER_DEFAULT],
         true);
 
-
+    $userBase = getUserByEmail ( $link, $user['email'] );
 
     foreach ($user as $key=>$value) {
         if (isset($rules[$key])) {
@@ -38,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
         }
     }
     if (in_array(strtolower($user['email']), $allEmails)){
-        $password = getPasswordByEmail($user['email'], $link);
+        $password = $userBase['password'];
         password_verify($user['password'],$password)? $errors['password'] = null : $errors['password'] =  "Указан неверный пароль" ;
     }
     $errors = array_filter($errors);
@@ -62,9 +63,8 @@ $pageLayout = include_template('layout.php', [
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && empty($errors)) {
 
-    session_start();
-    $_SESSION['username'] = getUserIdByEmail($link, $user['email']);
-
+    $_SESSION['userId'] = intval($userBase['id']);
+    $_SESSION['name'] = $userBase['name'];
     header('Location: /index.php');
 
 }

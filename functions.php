@@ -57,7 +57,7 @@ function getProjectsByUserId ($link,  int $userId) : array {
  * @return array
  * Создает массив из задач, выбранных по конкретному юзеру
  */
-function getTasksByUserId ($link,  $userId) : array {
+function getTasksByUserId ($link, int $userId) : array {
     $sql = "SELECT * FROM tasks WHERE user_id = " . $userId . " ";
     $result = mysqli_query($link, $sql);
     if (!$result) {
@@ -172,7 +172,7 @@ function addUser ($link, array $userAdd){
     }
 }
 
-function checkEmail ($email, array $allEmails)
+function checkEmail (string $email, array $allEmails)
 {
     if (in_array(strtolower($email), $allEmails)) {
         return null;
@@ -182,23 +182,29 @@ function checkEmail ($email, array $allEmails)
 
 }
 
-function getPasswordByEmail ($email, $link)
-{
-    $sql = "SELECT password FROM users WHERE email='".$email."'";
+
+
+function getUserByEmail ($link, string $email) {
+    $email = mysqli_real_escape_string($link, $email);
+    $sql = "SELECT * FROM users WHERE email='$email'";
+
     $result = mysqli_query($link, $sql);
+
+    if ($result==''){
+        return false;
+    }
+
     $array = mysqli_fetch_array($result, MYSQLI_ASSOC);
-    $password = $array['password'];
 
-    return $password;
-
+    return $array;
 }
 
-function getUserIdByEmail ($link, $email) {
-    $sql = "SELECT id FROM users WHERE email='".$email."'";
-    $result = mysqli_query($link, $sql);
-    $array = mysqli_fetch_array($result, MYSQLI_ASSOC);
-    $id = $array['id'];
+function checkSession () {
+    if (empty($_SESSION['userId']))
+    {
+        header('Location: /logout.php');
+        exit;
+    }
 
-    return $id;
 }
 

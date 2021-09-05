@@ -6,15 +6,14 @@ require('helpers.php');
 require('init.php');
 
 
-session_start();
 
-if (empty($_SESSION['username']))
-{
-    header('Location: /logout.php');
-    exit;
-}
+checkSession();
 
-$userId = $_SESSION['username'];
+
+
+$userId = $_SESSION['userId'];
+$userName = $_SESSION['name'];
+
 
 
 
@@ -26,14 +25,16 @@ $projectsId = array_column($projects, 'id');
 
 $button = include_template('button-footer.php');
 
-$header = include_template('header.php');
+$header = include_template('header.php', [
+    'userName'=>$userName
+] );
 
 $footer = include_template('footer.php', [
     'button'=>$button
 ]);
 
 
-$tasksForProjects = getTasksByUserId($link, 1);
+$tasksForProjects = getTasksByUserId($link, $userId);
 
 $tasks = getTasksByProjectId($link, $userId, $project_id);
 

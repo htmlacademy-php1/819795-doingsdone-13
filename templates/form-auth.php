@@ -25,7 +25,8 @@
                 <div class="form__row">
                     <label class="form__label" for="email">E-mail <sup>*</sup></label>
                     <?php $classname = isset($errors['email']) ? "form__input--error" : "" ?>
-                    <input class="form__input <?= $classname ?>" type="text" name="email" id="email" value="" placeholder="Введите e-mail">
+                    <?php $value = $_POST['email'] ?? "" ?>
+                    <input class="form__input <?= $classname ?>" type="text" name="email" id="email" value="<?= htmlspecialchars($value) ?>" placeholder="Введите e-mail">
 
                     <p class="form__message"><?= $errors['email']?? "" ?></p>
                 </div>

@@ -4,14 +4,11 @@ require ('functions.php');
 require('helpers.php');
 require('init.php');
 
-session_start();
-if (empty($_SESSION['username']))
-{
-    header('Location: /logout.php');
-    exit;
-}
 
-$userId = $_SESSION['username'];
+checkSession();
+
+$userId = $_SESSION['userId'];
+$userName = $_SESSION['name'];
 
 $project_id = filter_input(INPUT_GET, 'project_id');
 
@@ -90,7 +87,9 @@ $button = include_template('button-footer.php');
 $tasksForProjects = getTasksByUserId($link,  $userId);
 
 
-$header = include_template('header.php');
+$header = include_template('header.php', [
+    'userName'=>$userName
+] );
 
 $footer = include_template('footer.php', [
     'button'=>$button

@@ -5,9 +5,9 @@ require('functions.php');
 require('helpers.php');
 require('init.php');
 
-session_start();
-$_SESSION['username']=null;
 
+$_SESSION['userId']=null;
+$_SESSION['name']=null;
 
 $footer = include_template('footer.php', [
     'button' => ''
