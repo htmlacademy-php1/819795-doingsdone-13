@@ -31,7 +31,7 @@ function checkTime ($date) :bool {
     $date1 = new DateTime('now');
     $date2 = new DateTime($date);
     $difference = $date2->diff($date1);
-    return $difference->days<=1||$difference->invert==0;
+    return $difference->days<1||$difference->invert==0;
 }
 
 /**
@@ -163,7 +163,7 @@ function addUser ($link, array $userAdd){
     $sql = "INSERT INTO users (email, password,  name)
             VALUES ( ?, ?, ? )";
     $userAdd['password'] = password_hash($userAdd['password'], PASSWORD_DEFAULT);
-
+    $userAdd['email'] = mb_strtolower($userAdd['email']);
     $stmt = db_get_prepare_stmt($link, $sql, $userAdd);
     $res = mysqli_stmt_execute($stmt);
 
@@ -171,3 +171,40 @@ function addUser ($link, array $userAdd){
         die('Неверный запрос: ' . mysqli_error());
     }
 }
+
+function checkEmail (string $email, array $allEmails)
+{
+    if (in_array(strtolower($email), $allEmails)) {
+        return null;
+    }
+        return "Указана неcуществующая почта!";
+
+
+}
+
+
+
+function getUserByEmail ($link, string $email) {
+    $email = mysqli_real_escape_string($link, $email);
+    $sql = "SELECT * FROM users WHERE email='$email'";
+
+    $result = mysqli_query($link, $sql);
+
+    if ($result==''){
+            die('Неверный запрос: ' . mysqli_error());
+    }
+
+    $array = mysqli_fetch_array($result, MYSQLI_ASSOC);
+
+    return $array;
+}
+
+function checkSession () {
+    if (empty($_SESSION['userId']))
+    {
+        header('Location: /logout.php');
+        exit;
+    }
+
+}
+

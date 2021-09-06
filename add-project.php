@@ -5,7 +5,10 @@ require('helpers.php');
 require('init.php');
 
 
-$userId = 1;
+checkSession();
+
+$userId = $_SESSION['userId'];
+$userName = $_SESSION['name'];
 
 $projects = getProjectsByUserId($link, $userId);
 
@@ -43,13 +46,13 @@ if ($_SERVER['REQUEST_METHOD']=='POST'&&empty($errors)){
 
 $tasksForProjects = getTasksByUserId($link,  $userId);
 
-$button = include_template('button-footer.php');
 
-$header = include_template('header.php');
 
-$footer = include_template('footer.php', [
-    'button'=>$button
-]);
+$header = include_template('header.php', [
+    'userName'=>$userName
+] );
+
+$footer = include_template('footer.php');
 
 $pageProject = include_template('project.php', [
     'projects'=> $projects,
@@ -73,6 +76,7 @@ $pageContent = include_template('main.php', [
 
 
 $pageLayout = include_template('layout.php', [
+    'guest'=>'',
     'pageTitle' => $pageTitle,
     'content' => $pageContent,
     'footer' => $footer

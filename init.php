@@ -9,3 +9,4 @@ if (!$link) {
     print("Ошибка подключения: " . $error);
     exit();
 }
+session_start();

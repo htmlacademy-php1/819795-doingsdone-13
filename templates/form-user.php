@@ -7,7 +7,7 @@
         </a>
 
         <div class="main-header__side">
-          <a class="main-header__side-item button button--transparent" href="form-authorization.html">Войти</a>
+          <a class="main-header__side-item button button--transparent" href="auth.php">Войти</a>
         </div>
       </header>
 
@@ -15,7 +15,7 @@
         <section class="content__side">
           <p class="content__side-info">Если у вас уже есть аккаунт, авторизуйтесь на сайте</p>
 
-          <a class="button button--transparent content__side-button" href="form-authorization.html">Войти</a>
+          <a class="button button--transparent content__side-button" href="auth.php">Войти</a>
         </section>
 
         <main class="content__main">
@@ -25,7 +25,8 @@
             <div class="form__row">
               <label class="form__label" for="email">E-mail <sup>*</sup></label>
               <?php $classname = isset($errors['email']) ? "form__input--error" : "" ?>
-              <input class="form__input <?= $classname ?>" type="text" name="email" id="email" value="" placeholder="Введите e-mail">
+                <?php $value = $_POST['email'] ?? "" ?>
+              <input class="form__input <?= $classname ?>" type="text" name="email" id="email" value="<?= htmlspecialchars($value) ?>" placeholder="Введите e-mail">
 
               <p class="form__message"><?= $errors['email']?? "" ?></p>
             </div>
@@ -40,7 +41,8 @@
             <div class="form__row">
               <label class="form__label" for="name">Имя <sup>*</sup></label>
                 <?php $classname = isset($errors['name']) ? "form__input--error" : "" ?>
-              <input class="form__input <?= $classname ?>" type="text" name="name" id="name" value="" placeholder="Введите имя">
+                <?php $value = $_POST['name'] ?? "" ?>
+              <input class="form__input <?= $classname ?>" type="text" name="name" id="name" value="<?= htmlspecialchars($value) ?>" placeholder="Введите имя">
                 <p class="form__message"><?= $errors['name']?? "" ?></p>
             </div>
 

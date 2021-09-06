@@ -5,8 +5,9 @@
 
             <p>Веб-приложение для удобного ведения списка дел.</p>
         </div>
-
+        <?php $button = isset($_SESSION['userId']) ? '<a class="main-footer__button button button--plus" href="add.php">Добавить задачу</a>"' : "" ?>
         <?= $button ?>
+
 
         <div class="main-footer__social social">
             <span class="visually-hidden">Мы в соцсетях:</span>
