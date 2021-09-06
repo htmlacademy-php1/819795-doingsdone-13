@@ -6,12 +6,9 @@ require('helpers.php');
 require('init.php');
 
 
-$_SESSION['userId']=null;
-$_SESSION['name']=null;
 
-$footer = include_template('footer.php', [
-    'button' => ''
-]);
+
+$footer = include_template('footer.php');
 
 $content = include_template('form-guest.php');
 

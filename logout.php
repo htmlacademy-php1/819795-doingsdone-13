@@ -1,5 +1,5 @@
 <?php
 session_start();
-$_SESSION['username']=null;
+$_SESSION=[];
 header('Location: /guest.php');
 exit;
