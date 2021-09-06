@@ -74,7 +74,7 @@ function getTasksByUserId ($link, int $userId) : array {
  * @return array
  */
 
-function getTasksByProjectId ($link,  $user_id,  $project ) : array  {
+function getTasksByProjectId ($link, int $user_id,  $project ) : array  {
  if ($project) {
      $id = intval($project);
      $sql = "SELECT * FROM tasks WHERE user_id = ". $user_id . " AND  project_id =" . $id . " ";
@@ -191,7 +191,7 @@ function getUserByEmail ($link, string $email) {
     $result = mysqli_query($link, $sql);
 
     if ($result==''){
-        return false;
+            die('Неверный запрос: ' . mysqli_error());
     }
 
     $array = mysqli_fetch_array($result, MYSQLI_ASSOC);

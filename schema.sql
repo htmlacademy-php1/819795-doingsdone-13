@@ -26,4 +26,4 @@ CREATE TABLE tasks (
 
 )
 
-SELECT * FROM tasks WHERE date(NOW())
+
