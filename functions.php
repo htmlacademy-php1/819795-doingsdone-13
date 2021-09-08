@@ -218,4 +218,13 @@ function checkSession () {
     }
 
 }
+function searchTasks ($link, int $userId, $search) : array  {
+    $sql = "SELECT * FROM tasks WHERE user_id = " . $userId . " AND MATCH(content) AGAINST('".$search."')";
+    $result = mysqli_query($link, $sql);
+    if (!$result) {
+        die('Неверный запрос: ' . mysqli_error());
+    }
+    $array = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
+    return $array;
+}

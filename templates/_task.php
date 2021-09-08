@@ -1,14 +1,17 @@
 <h2 class="content__main-heading">Список задач</h2>
 
-<form class="search-form" action="index.php" method="post" autocomplete="off">
-    <input class="search-form__input" type="text" name="" value="" placeholder="Поиск по задачам">
+<form class="search-form" action="index.php" method="get" autocomplete="off">
+    <input class="search-form__input " type="text" name="search" value="<?= htmlspecialchars($_GET['search']) ?>" placeholder="Поиск по задачам">
 
-    <input class="search-form__submit" type="submit" name="" value="Искать">
+    <input class="search-form__submit" type="submit" name="" value="" >
+    <?php $search = empty($tasks)&&isset($_GET['search'])?"Ничего не найдено по вашему запросу" : "" ?>
+    <p class = form__message><?= $search ?></p>
+
 </form>
 
 <div class="tasks-controls">
     <nav class="tasks-switch">
-        <?php $projectId = isset($_GET['project_id']) ? htmlspecialchars("&project_id=".$_GET['project_id']) : "" ?>
+        <?php $projectId = isset($_GET['project_id']) ? "&project_id=".htmlspecialchars($_GET['project_id']) : "" ?>
 
         <a href="http://819795-doingsdone-13/index.php" class="tasks-switch__item <?= !$_GET['sort']?"tasks-switch__item--active":"" ?>">Все задачи</a>
         <a href="http://819795-doingsdone-13/index.php?sort=1<?= $projectId ?>" class="tasks-switch__item <?= $_GET['sort']==1?"tasks-switch__item--active":"" ?>">Повестка дня</a>
@@ -39,7 +42,6 @@
 
         <td class="task__date"></td>
     </tr>
-
     <?php foreach ($tasks as $key => $value): ?>
         <?php if ($show_complete_tasks == 0 && $value['complete'] == true) {
             continue;

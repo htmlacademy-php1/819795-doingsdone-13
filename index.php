@@ -14,12 +14,12 @@ checkSession();
 $userId = $_SESSION['userId'];
 $userName = $_SESSION['name'];
 
+$search = filter_input(INPUT_GET, 'search');
 $project_id = intval (filter_input(INPUT_GET, 'project_id'));
-
 $sort = intval (filter_input(INPUT_GET, 'sort'));
 
 
-$project_id = filter_input(INPUT_GET, 'project_id');
+
 
 $projects = getProjectsByUserId($link, $userId);
 
@@ -27,7 +27,11 @@ $projectsId = array_column($projects, 'id');
 
 $tasksForProjects = getTasksByUserId($link, $userId);
 
-$tasks = getTasks($link, $userId, $project_id, $sort);
+if (isset($search)){
+    $tasks = searchTasks($link, $userId, $search);
+}else {
+    $tasks = getTasks($link, $userId, $project_id, $sort);
+}
 
 
 

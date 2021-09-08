@@ -24,6 +24,6 @@ CREATE TABLE tasks (
                         dt_end TIMESTAMP DEFAULT NULL,
                         url TEXT DEFAULT NULL
 
-)
-
+);
+CREATE FULLTEXT INDEX task_search ON tasks (content)
 
