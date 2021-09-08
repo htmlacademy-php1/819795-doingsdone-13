@@ -74,12 +74,23 @@ function getTasksByUserId ($link, int $userId) : array {
  * @return array
  */
 
-function getTasksByProjectId ($link, int $user_id,  $project ) : array  {
+function getTasks ($link, int $user_id, $project, int $sort ) : array  {
+
+    if ($sort==1){
+        $sort = " AND DAY(dt_end) = DAY(NOW())";
+    } else if ($sort==2){
+        $sort = " AND DAY(dt_end) = DAY(DATE_ADD(CURDATE(),INTERVAL 1 DAY))";
+    } else if ($sort==3){
+        $sort = " AND DAY(dt_end) < DAY(NOW())";
+    } else {
+        $sort ="";
+    }
+
  if ($project) {
      $id = intval($project);
-     $sql = "SELECT * FROM tasks WHERE user_id = ". $user_id . " AND  project_id =" . $id . " ";
+     $sql = "SELECT * FROM tasks WHERE user_id = ". $user_id . " AND  project_id =" . $id . $sort;
  }else{
-     $sql = "SELECT * FROM tasks WHERE user_id = ". $user_id . " ";
+     $sql = "SELECT * FROM tasks WHERE user_id = ". $user_id . $sort;
  }
     $result = mysqli_query($link, $sql);
     $array = mysqli_fetch_all($result, MYSQLI_ASSOC);

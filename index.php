@@ -14,7 +14,9 @@ checkSession();
 $userId = $_SESSION['userId'];
 $userName = $_SESSION['name'];
 
+$project_id = intval (filter_input(INPUT_GET, 'project_id'));
 
+$sort = intval (filter_input(INPUT_GET, 'sort'));
 
 
 $project_id = filter_input(INPUT_GET, 'project_id');
@@ -22,6 +24,10 @@ $project_id = filter_input(INPUT_GET, 'project_id');
 $projects = getProjectsByUserId($link, $userId);
 
 $projectsId = array_column($projects, 'id');
+
+$tasksForProjects = getTasksByUserId($link, $userId);
+
+$tasks = getTasks($link, $userId, $project_id, $sort);
 
 
 
@@ -31,10 +37,6 @@ $header = include_template('header.php', [
 
 $footer = include_template('footer.php');
 
-
-$tasksForProjects = getTasksByUserId($link, $userId);
-
-$tasks = getTasksByProjectId($link, $userId, $project_id);
 
 
 $pageProject = include_template('project.php', [

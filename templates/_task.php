@@ -8,10 +8,12 @@
 
 <div class="tasks-controls">
     <nav class="tasks-switch">
-        <a href="/" class="tasks-switch__item tasks-switch__item--active">Все задачи</a>
-        <a href="/" class="tasks-switch__item">Повестка дня</a>
-        <a href="/" class="tasks-switch__item">Завтра</a>
-        <a href="/" class="tasks-switch__item">Просроченные</a>
+        <?php $projectId = isset($_GET['project_id']) ? htmlspecialchars("&project_id=".$_GET['project_id']) : "" ?>
+
+        <a href="http://819795-doingsdone-13/index.php" class="tasks-switch__item <?= !$_GET['sort']?"tasks-switch__item--active":"" ?>">Все задачи</a>
+        <a href="http://819795-doingsdone-13/index.php?sort=1<?= $projectId ?>" class="tasks-switch__item <?= $_GET['sort']==1?"tasks-switch__item--active":"" ?>">Повестка дня</a>
+        <a href="http://819795-doingsdone-13/index.php?sort=2<?= $projectId ?>" class="tasks-switch__item <?= $_GET['sort']==2?"tasks-switch__item--active":"" ?>">Завтра</a>
+        <a href="http://819795-doingsdone-13/index.php?sort=3<?= $projectId ?>" class="tasks-switch__item <?= $_GET['sort']==3?"tasks-switch__item--active":"" ?>">Просроченные</a>
     </nav>
 
     <label class="checkbox">
