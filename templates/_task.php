@@ -1,7 +1,8 @@
 <h2 class="content__main-heading">Список задач</h2>
 
 <form class="search-form" action="index.php" method="get" autocomplete="off">
-    <input class="search-form__input " type="text" name="search" value="<?= htmlspecialchars($_GET['search']) ?>" placeholder="Поиск по задачам">
+    <?php $searchValue = isset($_GET['search'])?htmlspecialchars($_GET['search']) : ""?>
+    <input class="search-form__input " type="text" name="search" value="<?= $searchValue ?>" placeholder="Поиск по задачам">
 
     <input class="search-form__submit" type="submit" name="" value="" >
     <?php $search = empty($tasks)&&isset($_GET['search'])?"Ничего не найдено по вашему запросу" : "" ?>
