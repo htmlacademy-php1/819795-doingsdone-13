@@ -8,7 +8,7 @@
 
 <div class="tasks-controls">
     <nav class="tasks-switch">
-        <?php $projectId = isset($_GET['project_id']) ? "&project_id=".$_GET['project_id'] : "" ?>
+        <?php $projectId = isset($_GET['project_id']) ? htmlspecialchars("&project_id=".$_GET['project_id']) : "" ?>
 
         <a href="http://819795-doingsdone-13/index.php" class="tasks-switch__item <?= !$_GET['sort']?"tasks-switch__item--active":"" ?>">Все задачи</a>
         <a href="http://819795-doingsdone-13/index.php?sort=1<?= $projectId ?>" class="tasks-switch__item <?= $_GET['sort']==1?"tasks-switch__item--active":"" ?>">Повестка дня</a>
