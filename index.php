@@ -1,25 +1,35 @@
 <?php
 // показывать или нет выполненные задачи
+require('init.php');
 require('data.php');
 require('functions.php');
 require('helpers.php');
-require('init.php');
+
 
 
 
 checkSession();
 
-
-
 $userId = $_SESSION['userId'];
 $userName = $_SESSION['name'];
 
+$search = filter_input(INPUT_GET, 'search');
 $project_id = intval (filter_input(INPUT_GET, 'project_id'));
-
 $sort = intval (filter_input(INPUT_GET, 'sort'));
+$complete = intval (filter_input(INPUT_GET, 'check'));
+$taskId = intval (filter_input(INPUT_GET, 'task_id'));
+
+$show_complete_tasks = $_SESSION['show_completed'];
 
 
-$project_id = filter_input(INPUT_GET, 'project_id');
+if (isset($complete)&&isset($taskId)){
+
+    setComplete($link, $taskId, $complete);
+
+}
+
+
+
 
 $projects = getProjectsByUserId($link, $userId);
 
@@ -27,7 +37,11 @@ $projectsId = array_column($projects, 'id');
 
 $tasksForProjects = getTasksByUserId($link, $userId);
 
-$tasks = getTasks($link, $userId, $project_id, $sort);
+if (isset($search)){
+    $tasks = searchTasks($link, $userId, $search);
+}else {
+    $tasks = getTasks($link, $userId, $project_id, $sort);
+}
 
 
 

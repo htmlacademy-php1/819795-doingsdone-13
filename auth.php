@@ -1,9 +1,9 @@
 <?php
 
+require('init.php');
 require('data.php');
 require('functions.php');
 require('helpers.php');
-require('init.php');
 
 $errors = [];
 

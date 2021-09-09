@@ -1,14 +1,16 @@
 <h2 class="content__main-heading">Список задач</h2>
 
-<form class="search-form" action="index.php" method="post" autocomplete="off">
-    <input class="search-form__input" type="text" name="" value="" placeholder="Поиск по задачам">
+<form class="search-form" action="index.php" method="get" autocomplete="off">
+    <?php $searchValue = isset($_GET['search'])?htmlspecialchars($_GET['search']) : ""?>
+    <input class="search-form__input " type="text" name="search" value="<?= $searchValue ?>" placeholder="Поиск по задачам">
 
-    <input class="search-form__submit" type="submit" name="" value="Искать">
+    <input class="search-form__submit" type="submit" name="" value="" >
+
 </form>
 
 <div class="tasks-controls">
     <nav class="tasks-switch">
-        <?php $projectId = isset($_GET['project_id']) ? htmlspecialchars("&project_id=".$_GET['project_id']) : "" ?>
+        <?php $projectId = isset($_GET['project_id']) ? "&project_id=".htmlspecialchars($_GET['project_id']) : "" ?>
 
         <a href="http://819795-doingsdone-13/index.php" class="tasks-switch__item <?= !$_GET['sort']?"tasks-switch__item--active":"" ?>">Все задачи</a>
         <a href="http://819795-doingsdone-13/index.php?sort=1<?= $projectId ?>" class="tasks-switch__item <?= $_GET['sort']==1?"tasks-switch__item--active":"" ?>">Повестка дня</a>
@@ -23,7 +25,8 @@
         <span class="checkbox__text">Показывать выполненные</span>
     </label>
 </div>
-
+<?php $search = empty($tasks)&&isset($_GET['search'])?"Ничего не найдено по вашему запросу" : "" ?>
+<p><?= $search ?></p>
 <table class="tasks">
     <tr class="tasks__item task">
         <td class="task__select">
@@ -38,28 +41,29 @@
         </td>
 
         <td class="task__date"></td>
+        <td class="task__controls"></td>
     </tr>
-
     <?php foreach ($tasks as $key => $value): ?>
         <?php if ($show_complete_tasks == 0 && $value['complete'] == true) {
             continue;
         } ?>
-        <tr class="tasks__item <?= $value['complete'] ? " task--completed " : '' ?>
+        <tr class="tasks__item task<?= $value['complete'] ? " task--completed " : '' ?>
                        <?= checkTime($value['dt_end']) && !$value['complete'] ? " task--important " : '' ?> ">
             <td class="task__select">
                 <label class="checkbox task__checkbox ">
-                    <input class="checkbox__input visually-hidden" type="checkbox" checked>
+                    <?php $checked = $value['complete']==1? " checked " : '' ?>
+                    <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="<?= $value['id'] ?>" <?= $checked ?>>
                     <span class="checkbox__text"><?= htmlspecialchars($value['content']) ?></span>
                 </label>
             </td>
             <td class="task__date"><?= htmlspecialchars($value['dt_end']) ?></td>
-            <?php if ($value['url']) : ?>
-                <td class="task__file">
+            <td class="task__file">
+                <?php if ($value['url']) : ?>
                     <a class="download-link"
                        href="C:\Openserver\OSPanel\domains\819795-doingsdone-13\uploads\<?= $value['url'] ?>">
                         <?= htmlspecialchars($value['url']) ?></a>
-                </td>
-            <?php endif; ?>
+                <?php endif; ?>
+            </td>
             <td class="task__controls"></td>
         </tr>
     <?php endforeach; ?>

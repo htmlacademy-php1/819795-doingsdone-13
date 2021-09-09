@@ -218,4 +218,23 @@ function checkSession () {
     }
 
 }
+function searchTasks ($link, int $userId, $search) : array  {
+    $search = mysqli_real_escape_string($link, $search);
+    $sql = "SELECT * FROM tasks WHERE user_id = " . $userId . " AND MATCH(content) AGAINST('".$search."')";
+    $result = mysqli_query($link, $sql);
+    if (!$result) {
+        die('Неверный запрос: ' . mysqli_error());
+    }
+    $array = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+    return $array;
+}
+
+function setComplete ($link, int $task, int $complete)   {
+    $sql = "UPDATE tasks SET complete='$complete' WHERE id='$task'";
+    $result = mysqli_query($link, $sql);
+    if (!$result) {
+        die('Неверный запрос: ' . mysqli_error());
+    }
+}
 
