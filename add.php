@@ -19,10 +19,7 @@ $projectsId = array_column($projects, 'id');
 $errors = [];
 
 
-
-
-
-if ($_SERVER['REQUEST_METHOD']=='POST'){
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $required = ['name', 'project'];
 
     $rules = [
@@ -38,15 +35,15 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
     ];
 
     $task = filter_input_array(INPUT_POST,
-        ['name'=> FILTER_DEFAULT, 'project'=>FILTER_DEFAULT, 'data'=>FILTER_DEFAULT],
+        ['name' => FILTER_DEFAULT, 'project' => FILTER_DEFAULT, 'data' => FILTER_DEFAULT],
         true);
 
-    foreach ($task as $key=>$value) {
+    foreach ($task as $key => $value) {
         if (isset($rules[$key])) {
             $rule = $rules[$key];
-            $errors[$key]=$rule($value);
+            $errors[$key] = $rule($value);
         }
-        if (in_array($key, $required)&&empty($value)) {
+        if (in_array($key, $required) && empty($value)) {
             $errors[$key] = "Поле надо заполнить";
         }
     }
@@ -56,23 +53,20 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
 }
 
 
-
-
-
-if ($_SERVER['REQUEST_METHOD']=='POST'&&empty($errors)){
-    $taskAdd=$_POST;
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && empty($errors)) {
+    $taskAdd = $_POST;
 
     if ($_FILES['file']['tmp_name']) {
-        $filename = $_FILES['file']['name'] ;
+        $filename = $_FILES['file']['name'];
         $taskAdd['path'] = $filename;
         move_uploaded_file($_FILES['file']['tmp_name'], 'uploads/' . $filename);
     } else {
         $taskAdd['path'] = null;
     };
 
-    if (empty($taskAdd['date'])){
+    if (empty($taskAdd['date'])) {
 
-        $taskAdd['date']=null;
+        $taskAdd['date'] = null;
 
     };
 
@@ -83,24 +77,23 @@ if ($_SERVER['REQUEST_METHOD']=='POST'&&empty($errors)){
 }
 
 
-
-$tasksForProjects = getTasksByUserId($link,  $userId);
+$tasksForProjects = getTasksByUserId($link, $userId);
 
 
 $header = include_template('header.php', [
-    'userName'=>$userName
-] );
+    'userName' => $userName
+]);
 
 $footer = include_template('footer.php');
 
 $pageProject = include_template('project.php', [
-    'projects'=> $projects,
-    'tasks'=>$tasksForProjects
+    'projects' => $projects,
+    'tasks' => $tasksForProjects
 
 ]);
 
 $pageFormTask = include_template('form-task.php', [
-    'projects'=> $projects,
+    'projects' => $projects,
     'errors' => $errors,
     '_POST' => $_POST
 ]);
@@ -112,10 +105,8 @@ $pageContent = include_template('main.php', [
 ]);
 
 
-
-
 $pageLayout = include_template('layout.php', [
-    'guest'=>'',
+    'guest' => '',
     'pageTitle' => $pageTitle,
     'content' => $pageContent,
     'footer' => $footer

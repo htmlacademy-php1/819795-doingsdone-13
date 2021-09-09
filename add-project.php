@@ -17,23 +17,17 @@ $projectsContent = array_column($projects, 'content');
 $errors = null;
 
 
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-
-
-if ($_SERVER['REQUEST_METHOD']=='POST'){
-
-    if (empty ($_POST['project_name'])){
+    if (empty ($_POST['project_name'])) {
         $errors = "Поле надо заполнить";
     } else {
-        $errors =  validateProjectName( $projectsContent, $_POST['project_name']);
+        $errors = validateProjectName($projectsContent, $_POST['project_name']);
     }
 }
 
 
-
-
-
-if ($_SERVER['REQUEST_METHOD']=='POST'&&empty($errors)){
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && empty($errors)) {
 
 
     addProject($link, $_POST, $userId);
@@ -43,20 +37,18 @@ if ($_SERVER['REQUEST_METHOD']=='POST'&&empty($errors)){
 }
 
 
-
-$tasksForProjects = getTasksByUserId($link,  $userId);
-
+$tasksForProjects = getTasksByUserId($link, $userId);
 
 
 $header = include_template('header.php', [
-    'userName'=>$userName
-] );
+    'userName' => $userName
+]);
 
 $footer = include_template('footer.php');
 
 $pageProject = include_template('project.php', [
-    'projects'=> $projects,
-    'tasks'=>$tasksForProjects
+    'projects' => $projects,
+    'tasks' => $tasksForProjects
 
 ]);
 
@@ -73,10 +65,8 @@ $pageContent = include_template('main.php', [
 ]);
 
 
-
-
 $pageLayout = include_template('layout.php', [
-    'guest'=>'',
+    'guest' => '',
     'pageTitle' => $pageTitle,
     'content' => $pageContent,
     'footer' => $footer
