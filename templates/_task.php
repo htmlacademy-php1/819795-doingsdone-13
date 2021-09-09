@@ -5,8 +5,6 @@
     <input class="search-form__input " type="text" name="search" value="<?= $searchValue ?>" placeholder="Поиск по задачам">
 
     <input class="search-form__submit" type="submit" name="" value="" >
-    <?php $search = empty($tasks)&&isset($_GET['search'])?"Ничего не найдено по вашему запросу" : "" ?>
-    <p class = form__message><?= $search ?></p>
 
 </form>
 
@@ -27,7 +25,8 @@
         <span class="checkbox__text">Показывать выполненные</span>
     </label>
 </div>
-
+<?php $search = empty($tasks)&&isset($_GET['search'])?"Ничего не найдено по вашему запросу" : "" ?>
+<p><?= $search ?></p>
 <table class="tasks">
     <tr class="tasks__item task">
         <td class="task__select">

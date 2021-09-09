@@ -219,7 +219,7 @@ function checkSession () {
 
 }
 function searchTasks ($link, int $userId, $search) : array  {
-    $sql = "SELECT * FROM tasks WHERE user_id = " . $userId . " AND MATCH(content) AGAINST('".$search."')";
+    $sql = "SELECT * FROM tasks WHERE user_id = " . $userId . " AND MATCH(content) AGAINST('".htmlspecialchars($search)."')";
     $result = mysqli_query($link, $sql);
     if (!$result) {
         die('Неверный запрос: ' . mysqli_error());
