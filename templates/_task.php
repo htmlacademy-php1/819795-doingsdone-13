@@ -41,27 +41,29 @@
         </td>
 
         <td class="task__date"></td>
+        <td class="task__controls"></td>
     </tr>
     <?php foreach ($tasks as $key => $value): ?>
         <?php if ($show_complete_tasks == 0 && $value['complete'] == true) {
             continue;
         } ?>
-        <tr class="tasks__item <?= $value['complete'] ? " task--completed " : '' ?>
+        <tr class="tasks__item task<?= $value['complete'] ? " task--completed " : '' ?>
                        <?= checkTime($value['dt_end']) && !$value['complete'] ? " task--important " : '' ?> ">
             <td class="task__select">
                 <label class="checkbox task__checkbox ">
-                    <input class="checkbox__input visually-hidden" type="checkbox" checked>
+                    <?php $checked = $value['complete']==1? " checked " : '' ?>
+                    <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="<?= $value['id'] ?>" <?= $checked ?>>
                     <span class="checkbox__text"><?= htmlspecialchars($value['content']) ?></span>
                 </label>
             </td>
             <td class="task__date"><?= htmlspecialchars($value['dt_end']) ?></td>
-            <?php if ($value['url']) : ?>
-                <td class="task__file">
+            <td class="task__file">
+                <?php if ($value['url']) : ?>
                     <a class="download-link"
                        href="C:\Openserver\OSPanel\domains\819795-doingsdone-13\uploads\<?= $value['url'] ?>">
                         <?= htmlspecialchars($value['url']) ?></a>
-                </td>
-            <?php endif; ?>
+                <?php endif; ?>
+            </td>
             <td class="task__controls"></td>
         </tr>
     <?php endforeach; ?>
