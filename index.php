@@ -6,29 +6,25 @@ require('functions.php');
 require('helpers.php');
 
 
-
-
 checkSession();
 
 $userId = $_SESSION['userId'];
 $userName = $_SESSION['name'];
 
 $search = filter_input(INPUT_GET, 'search');
-$project_id = intval (filter_input(INPUT_GET, 'project_id'));
-$sort = intval (filter_input(INPUT_GET, 'sort'));
-$complete = intval (filter_input(INPUT_GET, 'check'));
-$taskId = intval (filter_input(INPUT_GET, 'task_id'));
+$project_id = intval(filter_input(INPUT_GET, 'project_id'));
+$sort = intval(filter_input(INPUT_GET, 'sort'));
+$complete = intval(filter_input(INPUT_GET, 'check'));
+$taskId = intval(filter_input(INPUT_GET, 'task_id'));
 
 $show_complete_tasks = $_SESSION['show_completed'];
 
 
-if (isset($complete)&&isset($taskId)){
+if (isset($complete) && isset($taskId)) {
 
     setComplete($link, $taskId, $complete);
 
 }
-
-
 
 
 $projects = getProjectsByUserId($link, $userId);
@@ -37,20 +33,18 @@ $projectsId = array_column($projects, 'id');
 
 $tasksForProjects = getTasksByUserId($link, $userId);
 
-if (isset($search)){
+if (isset($search)) {
     $tasks = searchTasks($link, $userId, $search);
-}else {
+} else {
     $tasks = getTasks($link, $userId, $project_id, $sort);
 }
 
 
-
 $header = include_template('header.php', [
-    'userName'=>$userName
-] );
+    'userName' => $userName
+]);
 
 $footer = include_template('footer.php');
-
 
 
 $pageProject = include_template('project.php', [
@@ -72,12 +66,11 @@ $pageContent = include_template('main.php', [
 ]);
 
 $pageLayout = include_template('layout.php', [
-    'guest'=>'',
+    'guest' => '',
     'pageTitle' => $pageTitle,
     'content' => $pageContent,
     'footer' => $footer
 ]);
-
 
 
 print ($pageLayout);
