@@ -255,3 +255,19 @@ function setComplete($link, int $task, int $complete)
     }
 }
 
+
+
+
+function checkAlarm($link): array
+{
+    $sql = "SELECT t.content, t.dt_end, u.email, u.name FROM tasks t
+   INNER JOIN users u ON u.id = t.user_id WHERE DAY(dt_end) = DAY(NOW())";
+    $result = mysqli_query($link, $sql);
+    if (!$result) {
+        die('Неверный запрос: ' . mysqli_error());
+    }
+    $array = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    return $array;
+}
+
+
