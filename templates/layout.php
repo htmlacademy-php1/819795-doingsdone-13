@@ -13,7 +13,7 @@
 
 <div class="page-wrapper">
 
-<?= $content ?>
+    <?= $content ?>
 
 </div>
 

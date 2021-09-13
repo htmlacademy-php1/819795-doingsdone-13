@@ -10,9 +10,7 @@ $errors = [];
 $allEmails = getAllEmails($link);
 
 
-
-if ($_SERVER['REQUEST_METHOD']=='POST'){
-
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
     $required = ['email'];
@@ -24,23 +22,24 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
     ];
 
     $user = filter_input_array(INPUT_POST,
-        [ 'email'=>FILTER_DEFAULT, 'password'=>FILTER_DEFAULT],
+        ['email' => FILTER_DEFAULT, 'password' => FILTER_DEFAULT],
         true);
 
-    $userBase = getUserByEmail ( $link, $user['email'] );
+    $userBase = getUserByEmail($link, $user['email']);
 
-    foreach ($user as $key=>$value) {
+    foreach ($user as $key => $value) {
         if (isset($rules[$key])) {
             $rule = $rules[$key];
-            $errors[$key]=$rule($value);
+            $errors[$key] = $rule($value);
         }
-        if (in_array($key, $required)&&empty($value)) {
+        if (in_array($key, $required) && empty($value)) {
             $errors[$key] = "Поле надо заполнить";
         }
     }
-    if (in_array(strtolower($user['email']), $allEmails)){
+    if (in_array(strtolower($user['email']), $allEmails)) {
         $password = $userBase['password'];
-        password_verify($user['password'],$password)? $errors['password'] = null : $errors['password'] =  "Указан неверный пароль" ;
+        password_verify($user['password'],
+            $password) ? $errors['password'] = null : $errors['password'] = "Указан неверный пароль";
     }
     $errors = array_filter($errors);
 
@@ -48,12 +47,12 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
 
 $footer = include_template('footer.php');
 
-$content = include_template('form-auth.php',[
+$content = include_template('form-auth.php', [
     'errors' => $errors
 ]);
 
 $pageLayout = include_template('layout.php', [
-    'guest'=>'',
+    'guest' => '',
     'pageTitle' => $pageTitle,
     'content' => $content,
     'footer' => $footer

@@ -1,0 +1,8 @@
+{
+    "name": "basay/doingsdone",
+    "description": "doingsdone",
+    "type": "project",
+    "require": {
+        "swiftmailer/swiftmailer": "^6.2"
+    }
+}

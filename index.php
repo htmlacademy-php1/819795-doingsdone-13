@@ -6,6 +6,7 @@ require('functions.php');
 require('helpers.php');
 
 
+
 checkSession();
 
 $userId = $_SESSION['userId'];
