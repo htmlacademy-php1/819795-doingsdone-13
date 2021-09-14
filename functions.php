@@ -75,6 +75,7 @@ function getTasksByUserId($link, int $userId): array
  * @param int $user_id
  * @param int $project
  * @return array
+ * Возвращает массив с отсортированными задачами (по проекту, по датам)
  */
 
 function getTasks($link, int $user_id, $project, int $sort): array
