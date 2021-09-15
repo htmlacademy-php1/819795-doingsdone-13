@@ -12,21 +12,21 @@
 <div class="tasks-controls">
     <nav class="tasks-switch">
         <?php $projectId = isset($_GET['project_id']) ? "&project_id=" . htmlspecialchars($_GET['project_id']) : "" ?>
-
+        <?php $sort = $_GET['sort'] ?? "" ?>
         <a href="http://819795-doingsdone-13/index.php"
-           class="tasks-switch__item <?= !$_GET['sort'] ? "tasks-switch__item--active" : "" ?>">Все задачи</a>
+           class="tasks-switch__item <?= !$sort ? "tasks-switch__item--active" : "" ?>">Все задачи</a>
         <a href="http://819795-doingsdone-13/index.php?sort=1<?= $projectId ?>"
-           class="tasks-switch__item <?= $_GET['sort'] == 1 ? "tasks-switch__item--active" : "" ?>">Повестка дня</a>
+           class="tasks-switch__item <?= $sort == 1 ? "tasks-switch__item--active" : "" ?>">Повестка дня</a>
         <a href="http://819795-doingsdone-13/index.php?sort=2<?= $projectId ?>"
-           class="tasks-switch__item <?= $_GET['sort'] == 2 ? "tasks-switch__item--active" : "" ?>">Завтра</a>
+           class="tasks-switch__item <?= $sort == 2 ? "tasks-switch__item--active" : "" ?>">Завтра</a>
         <a href="http://819795-doingsdone-13/index.php?sort=3<?= $projectId ?>"
-           class="tasks-switch__item <?= $_GET['sort'] == 3 ? "tasks-switch__item--active" : "" ?>">Просроченные</a>
+           class="tasks-switch__item <?= $sort == 3 ? "tasks-switch__item--active" : "" ?>">Просроченные</a>
     </nav>
 
     <label class="checkbox">
         <!--добавить сюда атрибут "checked", если переменная $show_complete_tasks равна единице-->
         <input class="checkbox__input visually-hidden show_completed"
-            <?= $show_complete_tasks == 1 ? " checked " : '' ?> type="checkbox">
+            <?= $show_complete_tasks  ? " checked " : '' ?> type="checkbox">
         <span class="checkbox__text">Показывать выполненные</span>
     </label>
 </div>
@@ -34,14 +34,14 @@
 <p><?= $search ?></p>
 <table class="tasks">
     <?php foreach ($tasks as $key => $value): ?>
-        <?php if ($show_complete_tasks == 0 && $value['complete'] == true) {
+        <?php if (!$show_complete_tasks  && $value['complete'] == true) {
             continue;
         } ?>
         <tr class="tasks__item task<?= $value['complete'] ? " task--completed " : '' ?>
                        <?= checkTime($value['dt_end']) && !$value['complete'] ? " task--important " : '' ?> ">
             <td class="task__select">
                 <label class="checkbox task__checkbox ">
-                    <?php $checked = $value['complete'] == 1 ? " checked " : '' ?>
+                    <?php $checked = $value['complete'] ? " checked " : '' ?>
                     <input class="checkbox__input visually-hidden task__checkbox" type="checkbox"
                            value="<?= $value['id'] ?>" <?= $checked ?>>
                     <span class="checkbox__text"><?= htmlspecialchars($value['content']) ?></span>

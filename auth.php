@@ -5,6 +5,8 @@ require('data.php');
 require('functions.php');
 require('helpers.php');
 
+checkAuth();
+
 $errors = [];
 
 $allEmails = getAllEmails($link);
