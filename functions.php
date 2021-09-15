@@ -77,7 +77,7 @@ function getTasksByUserId($link, int $userId): array
  * @return array
  */
 
-function getTasks($link, int $user_id, $project, int $sort): array
+function getTasks($link, int $user_id, int $project, int $sort): array
 {
 
     if ($sort == 1) {
@@ -95,7 +95,7 @@ function getTasks($link, int $user_id, $project, int $sort): array
     }
 
     if ($project) {
-        $id = intval($project);
+        $id = $project;
         $sql = "SELECT * FROM tasks WHERE user_id = " . $user_id . " AND  project_id =" . $id . $sort;
     } else {
         $sql = "SELECT * FROM tasks WHERE user_id = " . $user_id . $sort;
@@ -270,5 +270,13 @@ function checkAlarm($link): array
     return $array;
 }
 
+function checkAuth()
+{
+    if (isset($_SESSION['userId'])) {
+        header('Location: /logout.php');
+        exit;
+    }
+
+}
 
 
