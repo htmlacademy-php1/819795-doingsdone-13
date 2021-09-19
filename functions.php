@@ -236,7 +236,7 @@ function checkSession()
 function searchTasks($link, int $userId, $search): array
 {
     $search = mysqli_real_escape_string($link, $search);
-    $sql = "SELECT * FROM tasks WHERE user_id = " . $userId . " AND MATCH(content) AGAINST('" . $search . "')";
+    $sql = "SELECT * FROM tasks WHERE user_id = " . $userId . " AND MATCH(content) AGAINST('" . $search . "*' IN BOOLEAN MODE)";
     $result = mysqli_query($link, $sql);
     if (!$result) {
         die('Неверный запрос: ' . mysqli_error());
@@ -256,12 +256,10 @@ function setComplete($link, int $task, int $complete)
 }
 
 
-
-
 function checkAlarm($link): array
 {
     $sql = "SELECT t.content, t.dt_end, u.email, u.name FROM tasks t
-   INNER JOIN users u ON u.id = t.user_id WHERE DAY(dt_end) = DAY(NOW())";
+   INNER JOIN users u ON u.id = t.user_id WHERE DAY(dt_end) = DAY(NOW()) AND t.complete != 1";
     $result = mysqli_query($link, $sql);
     if (!$result) {
         die('Неверный запрос: ' . mysqli_error());

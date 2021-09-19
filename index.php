@@ -6,7 +6,6 @@ require('functions.php');
 require('helpers.php');
 
 
-
 checkSession();
 
 $userId = $_SESSION['userId'];
@@ -27,7 +26,6 @@ if (isset($complete) && isset($taskId)) {
 
 }
 
-
 $projects = getProjectsByUserId($link, $userId);
 
 $projectsId = array_column($projects, 'id');
@@ -35,6 +33,7 @@ $projectsId = array_column($projects, 'id');
 $tasksForProjects = getTasksByUserId($link, $userId);
 
 if (isset($search)) {
+    $search = trim($search);
     $tasks = searchTasks($link, $userId, $search);
 } else {
     $tasks = getTasks($link, $userId, $project_id, $sort);

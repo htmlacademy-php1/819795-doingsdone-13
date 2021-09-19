@@ -1,8 +1,8 @@
 <?php
 require('vendor/autoload.php');
 require('init.php');
-require ('mail_settings.php');
-require ('functions.php');
+require('mail_settings.php');
+require('functions.php');
 
 
 $usersArray = checkAlarm($link);
