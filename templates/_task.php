@@ -26,7 +26,7 @@
     <label class="checkbox">
         <!--добавить сюда атрибут "checked", если переменная $show_complete_tasks равна единице-->
         <input class="checkbox__input visually-hidden show_completed"
-            <?= $show_complete_tasks  ? " checked " : '' ?> type="checkbox">
+            <?= $show_complete_tasks ? " checked " : '' ?> type="checkbox">
         <span class="checkbox__text">Показывать выполненные</span>
     </label>
 </div>
@@ -34,7 +34,7 @@
 <p><?= $search ?></p>
 <table class="tasks">
     <?php foreach ($tasks as $key => $value): ?>
-        <?php if (!$show_complete_tasks  && $value['complete'] == true) {
+        <?php if (!$show_complete_tasks && $value['complete'] == true) {
             continue;
         } ?>
         <tr class="tasks__item task<?= $value['complete'] ? " task--completed " : '' ?>
@@ -50,17 +50,17 @@
             <td class="task__file">
                 <?php if ($value['url']) : ?>
                     <a class="download-link"
-                       href="C:\Openserver\OSPanel\domains\819795-doingsdone-13\uploads\<?= $value['url'] ?>">
+                       href="..\uploads\<?= $value['url'] ?>">
                         <?= htmlspecialchars($value['url']) ?></a>
                 <?php endif; ?>
             </td>
-            <?php if ($value['dt_end']){
+            <?php if ($value['dt_end']) {
                 $date = new DateTime($value['dt_end']);
-                $date = $date->format('d.m.Y') ;
+                $date = $date->format('d.m.Y');
             } else {
                 $date = 'Нет';
             } ?>
-            <td class="task__date"><?=$date  ?></td>
+            <td class="task__date"><?= $date ?></td>
             <td class="task__controls"></td>
         </tr>
     <?php endforeach; ?>

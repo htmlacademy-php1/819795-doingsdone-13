@@ -4,8 +4,8 @@
 <head>
   <meta charset="UTF-8">
   <title>Document</title>
-  <link rel="stylesheet" href="../css/normalize.css">
-  <link rel="stylesheet" href="../css/style.css">
+  <link href="../css/normalize.css" rel="stylesheet">
+  <link href="../css/style.css" rel="stylesheet">
 </head>
 
 <body>
@@ -15,7 +15,7 @@
   <div class="container container--with-sidebar">
     <header class="main-header">
       <a href="#">
-        <img src="../img/logo.png" width="153" height="42" alt="Логитип Дела в порядке">
+        <img alt="Логитип Дела в порядке" height="42" src="../img/logo.png" width="153">
       </a>
 
       <div class="main-header__side">
@@ -64,21 +64,23 @@
           </ul>
         </nav>
 
-        <a class="button button--transparent button--plus content__side-button" href="form-project.html">Добавить проект</a>
+        <a class="button button--transparent button--plus content__side-button" href="form-project.html">Добавить
+          проект</a>
       </section>
 
       <main class="content__main">
         <h2 class="content__main-heading">Добавление проекта</h2>
 
-        <form class="form"  action="index.html" method="post" autocomplete="off">
+        <form action="index.html" autocomplete="off" class="form" method="post">
           <div class="form__row">
             <label class="form__label" for="project_name">Название <sup>*</sup></label>
 
-            <input class="form__input" type="text" name="name" id="project_name" value="" placeholder="Введите название проекта">
+            <input class="form__input" id="project_name" name="name" placeholder="Введите название проекта" type="text"
+                   value="">
           </div>
 
           <div class="form__row form__row--controls">
-            <input class="button" type="submit" name="" value="Добавить">
+            <input class="button" name="" type="submit" value="Добавить">
           </div>
         </form>
       </main>

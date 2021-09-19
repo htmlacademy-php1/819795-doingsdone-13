@@ -79,7 +79,6 @@ function db_get_prepare_stmt($link, $sql, $data = [])
 }
 
 
-
 /**
  * Подключает шаблон, передает туда данные и возвращает итоговый HTML контент
  * @param string $name Путь к файлу шаблона относительно папки templates
